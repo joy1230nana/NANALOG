@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NANALOG ✦ Y2K PHOTOBOOTH APP</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=VT323&family=Space+Grotesk:wght@500;700;800&family=Syne:wght@800&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-y2k: #f4eff7;
+            --pink-accent: #ff007f;
+            --purple-accent: #7928ca;
+            --font-main: 'Space Grotesk', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; 
+            background-color: var(--bg-y2k);
+            background-image: radial-gradient(#e0d5e8 1px, transparent 1px);
+            background-size: 16px 16px;
+            font-family: var(--font-main);
+            color: #111;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        header.navbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #111;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #111111 30%, var(--pink-accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-btn {
+            background: #fff;
+            border: 2px solid #111;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 0px #111;
+            text-decoration: none;
+            color: #111;
+        }
+
+        .hero-section {
+            width: 100%;
+            text-align: center;
+            padding: 24px 16px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #ffed4a;
+            border: 1.5px solid #111;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            box-shadow: 2px 2px 0px #111;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: clamp(1.7rem, 7vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, var(--pink-accent), var(--purple-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            color: #555;
+            max-width: 90%;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        main { 
+            width: 100%;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .booth-container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .booth-container {
+                display: grid;
+                grid-template-columns: 320px 1fr;
+                align-items: start;
+            }
+        }
+
+        .controls-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #111;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .section-label {
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            color: #111;
+            margin-bottom: 6px;
+            margin-top: 10px;
+        }
+
+        .section-label:first-child { margin-top: 0; }
+
+        .frame-selector-grid {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        @media (min-width: 768px) {
+            .frame-selector-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                max-height: 220px;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+        }
+
+        .frame-opt-btn {
+            flex: 0 0 auto;
+            width: 100px;
+            background: #fff;
+            border: 1.5px solid #111;
+            padding: 8px 4px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 2px 2px 0px #111;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .frame-opt-btn.active {
+            background: #111;
+            color: #fff;
+            box-shadow: 2px 2px 0px var(--pink-accent);
+        }
+
+        .action-btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .btn-action-box {
+            background: #ffed4a;
+            color: #111;
+            border: 2px solid #111;
+            padding: 10px 6px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #111;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+
+        .btn-action-box.camera { background: #bbf7d0; }
+
+        .layout-switch-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .layout-btn {
+            background: #fff;
+            border: 2px solid #111;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #111;
+            text-align: center;
+        }
+
+        .layout-btn.active {
+            background: var(--purple-accent);
+            color: #fff;
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        .caption-input-box {
+            width: 100%;
+            padding: 8px 10px;
+            border: 2px solid #111;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            background: #fff;
+        }
+
+        .live-photostrip-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px dashed #111;
+            padding: 24px 16px;
+            border-radius: 16px;
+            gap: 16px;
+        }
+
+        .nanalog-strip {
+            width: 320px; 
+            padding: 14px 12px 18px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        .slots-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slots-container.grid-8-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .nanalog-strip .photo-slot {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            position: relative;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        .nanalog-strip .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+            transform-origin: center;
+        }
+        .nanalog-strip .photo-slot img:active { cursor: grabbing; }
+        .photo-tools {
+            position: absolute; right: 5px; bottom: 5px; z-index: 3;
+            display: flex; gap: 4px; opacity: 0; transition: opacity .15s;
+        }
+        .photo-slot:hover .photo-tools, .photo-slot:focus-within .photo-tools { opacity: 1; }
+        @media (hover: none) { .photo-tools { opacity: .9; } }
+        .photo-tool {
+            width: 28px; height: 28px; padding: 0; border: 1.5px solid #111;
+            border-radius: 50%; background: rgba(255,255,255,.92); color: #111;
+            font: 800 16px/1 sans-serif; box-shadow: 1px 1px 0 #111; touch-action: manipulation;
+        }
+        .photo-slot.drag-source { outline: 3px solid #ff007f; outline-offset: -3px; }
+        .photo-slot.swap-target { outline: 3px solid #ffed4a; outline-offset: -3px; }
+
+        .nanalog-strip .strip-footer {
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .btn-save-photo {
+            background: var(--pink-accent);
+            color: #fff;
+            border: 2px solid #111;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #111;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.1s;
+        }
+        .btn-save-photo:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #111;
+        }
+
+        #camera-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .camera-box {
+            background: #fff;
+            border: 3px solid #111;
+            border-radius: 16px;
+            padding: 16px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 6px 6px 0px var(--pink-accent);
+            font-family: var(--font-main);
+        }
+        .camera-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .camera-viewfinder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #111;
+            margin-bottom: 12px;
+        }
+        .camera-viewfinder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .camera-viewfinder video.front-cam { transform: scaleX(-1); }
+        .camera-viewfinder video.back-cam { transform: scaleX(1); }
+
+        #countdown-display {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: #ffed4a;
+            font-weight: 800;
+            text-shadow: 3px 3px 0px #111;
+            display: none;
+        }
+        .camera-tip { font-size: 0.85rem; font-weight: bold; margin-bottom: 12px; }
+        .camera-btns { display: flex; gap: 8px; }
+        .btn-switch-cam {
+            background: #e0d5e8;
+            border: 1.5px solid #111;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 1px 1px 0px #111;
+        }
+
+        /* 30 款独家边框样式与滤镜定义 (CSS 滤镜匹配系统) */
+        .frame-sweet-diary { background: #fcf8f2; border: 1px solid #ebd8c3; }
+        .frame-sweet-diary img { border: 1.5px solid #f4a8b8; filter: brightness(1.02) contrast(0.92) sepia(0.12) hue-rotate(-10deg) saturate(1.1); }
+        .frame-sweet-diary .caption { font-family: 'Caveat', cursive; font-size: 1.3rem; color: #d86b81; }
+
+        .frame-seoul-night { background: #0a0a0c; border: 1px solid #222228; }
+        .frame-seoul-night img { border: 1px solid #33333d; filter: brightness(1.1) contrast(1.2) hue-rotate(180deg) saturate(0.85); }
+        .frame-seoul-night .caption { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; color: #fff; }
+
+        .frame-ice-candy { background: linear-gradient(135deg, rgba(224,242,254,0.9), rgba(186,230,253,0.95)); border: 2px solid rgba(255,255,255,0.8); }
+        .frame-ice-candy img { border: 1px solid rgba(255,255,255,0.9); filter: brightness(1.05) contrast(0.95) saturate(0.9) hue-rotate(15deg); }
+        .frame-ice-candy .caption { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.75rem; color: #0369a1; }
+
+        .frame-pink-camera { background: linear-gradient(180deg, #ffd1dc 0%, #ffb6c1 100%); border: 2px solid #ff9baa; }
+        .frame-pink-camera img { border: 2px solid #ffffff; filter: brightness(1.12) contrast(1.05) saturate(1.15) hue-rotate(-5deg); }
+        .frame-pink-camera .caption { font-family: 'VT323', monospace; font-size: 1rem; color: #a81c43; }
+
+        .frame-film-club { background: #1a1816; border-left: 6px solid #0d0c0b; border-right: 6px solid #0d0c0b; }
+        .frame-film-club img { filter: brightness(0.95) contrast(1.1) sepia(0.35) saturate(1.2); }
+        .frame-film-club .caption { font-family: 'Space Grotesk', monospace; font-size: 0.7rem; letter-spacing: 0.15em; color: #d9ab6b; }
+
+        .frame-milk-glass { background: #fcfcfc; border: 1px solid #f0f0f0; }
+        .frame-milk-glass img { filter: brightness(1.02) contrast(0.94) sepia(0.08) saturate(0.9); }
+        .frame-milk-glass .caption { font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; color: #555; }
+
+        .frame-cyber-angel { background: linear-gradient(135deg, #e2e8f0 0%, #ffffff 50%, #cbd5e1 100%); border: 1.5px solid #94a3b8; }
+        .frame-cyber-angel img { filter: brightness(1.08) contrast(1.15) hue-rotate(210deg) saturate(0.95); }
+        .frame-cyber-angel .caption { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.7rem; color: #1e293b; }
+
+        .frame-school-notebook { background-color: #ffffff; background-image: linear-gradient(#e2e8f0 1px, transparent 1px); background-size: 100% 16px; border: 1.5px solid #cbd5e1; }
+        .frame-school-notebook img { border: 1px dashed #94a3b8; filter: brightness(1.06) contrast(1.08) hue-rotate(-15deg) saturate(1.05); }
+        .frame-school-notebook .caption { font-family: 'Caveat', cursive; font-size: 1.3rem; color: #2563eb; }
+
+        .frame-cherry-pop { background: #fff0f2; border: 2px solid #ffb3c1; }
+        .frame-cherry-pop img { border: 1.5px solid #ff4d6d; filter: brightness(1.08) contrast(1.1) saturate(1.3) hue-rotate(-5deg); }
+        .frame-cherry-pop .caption { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; color: #a4133c; }
+
+        .frame-cloud-dream { background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%); border: 1.5px solid #bae6fd; }
+        .frame-cloud-dream img { border-radius: 8px; border: 2px solid #ffffff; filter: brightness(1.05) contrast(0.9) saturate(0.95) hue-rotate(10deg); }
+        .frame-cloud-dream .caption { font-family: 'Caveat', cursive; font-size: 1.3rem; color: #0284c7; }
+
+        .frame-magazine-cover { background: #ffffff; border: 1px solid #111; }
+        .frame-magazine-cover img { border: 1px solid #111; filter: brightness(1.0) contrast(1.08) saturate(1.02); }
+        .frame-magazine-cover .caption { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem; color: #111; }
+
+        .frame-lost-memory { background: #c0c0c0; border: 2px solid #ffffff; border-right-color: #404040; border-bottom-color: #404040; }
+        .frame-lost-memory img { border: 2px solid #808080; border-right-color: #fff; border-bottom-color: #fff; filter: brightness(1.04) contrast(1.15) saturate(0.85); }
+        .frame-lost-memory .caption { font-family: 'VT323', monospace; font-size: 0.95rem; color: #000080; }
+
+        .frame-magical-card { background: linear-gradient(180deg, #fff0f6 0%, #ffdeeb 100%); border: 3px solid #f6ad55; box-shadow: inset 0 0 0 2px #fff, 0 6px 16px rgba(246, 173, 85, 0.3); border-radius: 12px; }
+        .frame-magical-card img { border: 2px solid #f6ad55; border-radius: 6px; filter: brightness(1.08) contrast(1.02) saturate(1.2) hue-rotate(-10deg); }
+        .frame-magical-card .caption { font-family: 'Caveat', cursive; font-size: 1.2rem; color: #dd6b20; font-weight: bold; }
+
+        .frame-sunny-doggy { background-color: #2c7a7b; border: 3px solid #234e52; }
+        .frame-sunny-doggy img { border: 2px solid #111; background-color: #fff; padding: 2px; filter: brightness(1.05) contrast(1.1) saturate(1.1); }
+        .frame-sunny-doggy .caption { font-family: 'VT323', monospace; font-size: 1rem; background: #ffc069; color: #111; border: 1.5px solid #111; display: inline-block; padding: 1px 6px; border-radius: 4px; }
+
+        .frame-mint-cat { background-color: #e6fffa; border: 2px solid #319795; }
+        .frame-mint-cat img { border: 2px solid #319795; border-radius: 6px; filter: brightness(1.03) contrast(0.98) saturate(1.05) hue-rotate(5deg); }
+        .frame-mint-cat .caption { font-family: 'Caveat', cursive; font-size: 1.2rem; color: #234e52; font-weight: bold; }
+
+        .frame-retro-comic { background-color: #fff5f5; border: 3px solid #111; }
+        .frame-retro-comic img { border: 2px solid #111; filter: brightness(1.1) contrast(1.25) saturate(1.2) hue-rotate(-15deg); }
+        .frame-retro-comic .caption { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.8rem; color: #e53e3e; text-shadow: 1px 1px 0px #111; text-transform: uppercase; }
+
+        .frame-star-spell { background: #fff1fa; border: 3px double #e879f9; box-shadow: inset 0 0 0 3px #fff; }
+        .frame-star-spell img { border: 2px solid #f0abfc; border-radius: 8px; filter: brightness(1.08) contrast(.98) saturate(1.18) hue-rotate(-8deg); }
+        .frame-star-spell .caption { font-family: 'Caveat', cursive; font-size: 1.25rem; color: #a21caf; }
+
+        .frame-manga-rush { background: #fff; border: 4px solid #111; }
+        .frame-manga-rush img { border: 3px solid #111; filter: grayscale(.15) contrast(1.28) saturate(.9); }
+        .frame-manga-rush .caption { font-family: 'Syne', sans-serif; font-size: .85rem; color: #111; text-transform: uppercase; }
+
+        .frame-campus-heart { background: #e8f7ff; border: 3px solid #60a5fa; }
+        .frame-campus-heart img { border: 2px solid #fff; border-radius: 5px; filter: brightness(1.08) contrast(.94) saturate(1.08); }
+        .frame-campus-heart .caption { font-family: 'Caveat', cursive; font-size: 1.25rem; color: #2563eb; }
+
+        .frame-cosmic-mecha { background: #111827; border: 3px solid #22d3ee; box-shadow: inset 0 0 0 2px #f43f5e; }
+        .frame-cosmic-mecha img { border: 2px solid #22d3ee; filter: brightness(1.03) contrast(1.2) saturate(1.15) hue-rotate(8deg); }
+        .frame-cosmic-mecha .caption { font-family: 'VT323', monospace; font-size: 1rem; color: #67e8f9; }
+
+        .frame-melody-dot { background-color:#fff0f6; background-image:radial-gradient(#5b3b47 1.2px,transparent 1.2px); background-size:9px 9px; border:4px solid #6b4a45; }
+        .frame-melody-dot img { border:3px solid #fff; filter:brightness(1.06) contrast(.96) saturate(1.08); }
+        .frame-melody-dot .caption { font-family:'Caveat',cursive; font-size:1.25rem; color:#6b3f55; }
+        .frame-bakery-day { background-color:#fff9df; background-image:linear-gradient(90deg,rgba(147,197,253,.28) 50%,transparent 50%),linear-gradient(rgba(147,197,253,.28) 50%,transparent 50%); background-size:20px 20px; border:4px solid #93c5fd; }
+        .frame-bakery-day img { border:4px solid #fff; filter:brightness(1.08) contrast(.94) saturate(1.04); }
+        .frame-bakery-day .caption { font-family:'Caveat',cursive; font-size:1.35rem; color:#b7791f; }
+        .frame-mint-cookie { background-color:#d9fff0; background-image:radial-gradient(#805d35 2px,transparent 2px); background-size:17px 17px; border:5px solid #704214; }
+        .frame-mint-cookie img { border:3px solid #fff7df; filter:brightness(1.04) contrast(1.02) saturate(1.06); }
+        .frame-mint-cookie .caption { font-family:'VT323',monospace; font-size:1.05rem; color:#704214; }
+        .frame-cherry-check { background-color:#fff4f4; background-image:linear-gradient(45deg,#ffd2d8 25%,transparent 25%,transparent 75%,#ffd2d8 75%),linear-gradient(45deg,#ffd2d8 25%,transparent 25%,transparent 75%,#ffd2d8 75%); background-position:0 0,10px 10px; background-size:20px 20px; border:4px solid #e11d48; }
+        .frame-cherry-check img { border:3px solid #fff; filter:brightness(1.06) saturate(1.16); }
+        .frame-cherry-check .caption { font-family:'Caveat',cursive; font-size:1.3rem; color:#be123c; }
+        .frame-cream-party { background:#fff7ed; border:5px dashed #f9a8d4; }
+        .frame-cream-party img { border:5px solid #fff; border-radius:10px; filter:brightness(1.08) contrast(.93) saturate(1.05); }
+        .frame-cream-party .caption { font-family:'Caveat',cursive; font-size:1.3rem; color:#db2777; }
+        .frame-postcard-love { background:#fefce8; border:7px dotted #ef4444; }
+        .frame-postcard-love img { border:3px solid #7dd3fc; filter:brightness(1.04) contrast(1.04) saturate(1.1); }
+        .frame-postcard-love .caption { font-family:'VT323',monospace; font-size:1rem; color:#dc2626; }
+        .frame-pixel-soda { background:#c4b5fd; border:5px solid #111; box-shadow:inset 0 0 0 4px #67e8f9; }
+        .frame-pixel-soda img { border:4px solid #111; filter:contrast(1.14) saturate(1.22); }
+        .frame-pixel-soda .caption { font-family:'VT323',monospace; font-size:1.15rem; color:#111; }
+        .frame-flower-picnic { background-color:#f0fdf4; background-image:linear-gradient(90deg,rgba(74,222,128,.2) 50%,transparent 50%),linear-gradient(rgba(74,222,128,.2) 50%,transparent 50%); background-size:24px 24px; border:4px solid #22c55e; }
+        .frame-flower-picnic img { border:4px solid #fff; filter:brightness(1.08) saturate(1.08); }
+        .frame-flower-picnic .caption { font-family:'Caveat',cursive; font-size:1.3rem; color:#15803d; }
+        .frame-comic-pop { background-color:#fde047; background-image:radial-gradient(#111 1.5px,transparent 1.5px); background-size:10px 10px; border:5px solid #111; }
+        .frame-comic-pop img { border:5px solid #111; filter:contrast(1.25) saturate(1.25); }
+        .frame-comic-pop .caption { font-family:'Syne',sans-serif; font-size:.9rem; color:#dc2626; }
+        .frame-moon-letter { background:#172554; border:4px double #fef08a; }
+        .frame-moon-letter img { border:3px solid #fef08a; border-radius:8px; filter:brightness(1.05) contrast(1.12) saturate(.92) hue-rotate(8deg); }
+        .frame-moon-letter .caption { font-family:'Caveat',cursive; font-size:1.3rem; color:#fef08a; }
+    </style>
+</head>
+<body>
+
+    <!-- 网页内置连续拍照模态框 -->
+    <div id="camera-modal">
+        <div class="camera-box">
+            <div class="camera-header-row">
+                <h3 id="cam-status-title" style="font-size:1.0rem;">📸 准备连拍</h3>
+                <button class="btn-switch-cam" onclick="toggleCameraDirection()">🔄 切换前后摄</button>
+            </div>
+            <div class="camera-viewfinder">
+                <video id="webcam-video" class="front-cam" autoplay playsinline muted></video>
+                <div id="countdown-display">3</div>
+            </div>
+            <div class="camera-tip" id="cam-tip">点击开始后将自动连拍 4 / 8 张照片</div>
+            <div class="camera-btns">
+                <button class="btn-action-box camera" id="btn-start-snap" style="flex:2;" onclick="startContinuousCapture()">开始连拍 🎬</button>
+                <button class="btn-action-box" style="flex:1; background:#fff;" onclick="closeWebcamModal()">退出</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="navbar">
+        <div class="brand-logo">NANALOG</div>
+        <nav class="nav-links">
+            <a href="#app-booth" class="nav-btn">PHOTOBOOTH</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-badge">✦ VINTAGE Y2K STUDIO ✦</div>
+        <h1 class="hero-title">CAPTURE YOUR<br><span>RETRO MEMORIES</span></h1>
+        <p class="hero-subtitle">30 款复古滤镜、4-Cut / 8-Cut 自由切换、相册上传与网页全自动连拍相机。</p>
+    </section>
+
+    <main id="app-booth">
+        <div class="booth-container">
+            
+            <!-- 左侧控制面板 -->
+            <div class="controls-card">
+                <div class="section-label">[1] SELECT 1/30 FRAME</div>
+                <div class="frame-selector-grid">
+                    <button class="frame-opt-btn active" onclick="applyFrame('frame-sweet-diary', 'today\'s memory ♡', this)">01. Sweet Diary</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-seoul-night', 'SEOUL / 02:26 AM', this)">02. Seoul Night</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-ice-candy', 'frozen memories', this)">03. Ice Candy</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-pink-camera', 'NANALOG CAM 2006', this)">04. Pink Camera</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-film-club', 'ROLL 03 / MEMORY', this)">05. Film Club</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-milk-glass', 'quiet moments', this)">06. Milk Glass</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cyber-angel', 'ONLINE MEMORY 01', this)">07. Cyber Angel</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-school-notebook', 'my little archive', this)">08. Notebook</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cherry-pop', 'sweet day 🍒', this)">09. Cherry Pop</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cloud-dream', 'somewhere in Seoul', this)">10. Cloud Dream</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-magazine-cover', 'NANA ISSUE 01', this)">11. Magazine</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-lost-memory', 'FILE FOUND 2007', this)">12. Lost Memory</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-magical-card', 'CARDCAPTOR ★', this)">13. Magical Card</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-sunny-doggy', 'SUNNY DOGGY 🐶', this)">14. Sunny Doggy</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-mint-cat', 'happy cat time 🐾', this)">15. Mint Cat</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-retro-comic', 'BOOM! 2000s', this)">16. Retro Comic</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-star-spell', 'STAR SPELL ✦', this)">17. Star Spell</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-manga-rush', 'NEXT CHAPTER!', this)">18. Manga Rush</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-campus-heart', 'our blue spring ♡', this)">19. Campus Heart</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cosmic-mecha', 'COSMIC UNIT 20', this)">20. Cosmic Mecha</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-melody-dot', 'my melody diary ♪', this)">21. Melody Dot</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-bakery-day', 'BAKE A SWEET DAY', this)">22. Bakery Day</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-mint-cookie', 'mint cookie club', this)">23. Mint Cookie</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cherry-check', 'cherry picnic ♡', this)">24. Cherry Check</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cream-party', 'CREAM PARTY!', this)">25. Cream Party</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-postcard-love', 'POSTED WITH LOVE', this)">26. Love Postcard</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-pixel-soda', 'PIXEL SODA 2004', this)">27. Pixel Soda</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-flower-picnic', 'flower picnic day', this)">28. Flower Picnic</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-comic-pop', 'WOW! SNAP!', this)">29. Comic Pop</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-moon-letter', 'a letter to the moon', this)">30. Moon Letter</button>
+                </div>
+
+                <div class="section-label">[2] GRID LAYOUT</div>
+                <div class="layout-switch-group">
+                    <button class="layout-btn active" id="btn-grid-4" onclick="setGridLayout(4)">4-Cut</button>
+                    <button class="layout-btn" id="btn-grid-8" onclick="setGridLayout(8)">8-Cut</button>
+                </div>
+
+                <div class="section-label">[3] ADD PHOTOS</div>
+                <div class="action-btn-group">
+                    <label class="btn-action-box">
+                        📂 相册上传
+                        <input type="file" id="image-uploader" accept="image/*" multiple style="display: none;" onchange="handleImageUpload(event)">
+                    </label>
+                    <div class="btn-action-box camera" onclick="openWebcamModal()">
+                        📸 网页连拍
+                    </div>
+                </div>
+
+                <div class="section-label">[4] EDIT CAPTION</div>
+                <input type="text" class="caption-input-box" id="caption-input" value="today's memory ♡" oninput="updateCaption(this.value)">
+            </div>
+
+            <!-- 右侧：相纸展示区 -->
+            <div class="live-photostrip-wrapper">
+                <div id="main-strip" class="nanalog-strip frame-sweet-diary">
+                    <div id="slots-container" class="slots-container">
+                        <div class="photo-slot" id="slot-0"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-1"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-2"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1800&q=90" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-3"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1800&q=90" crossorigin="anonymous"></div>
+                    </div>
+                    <div class="strip-footer">
+                        <div class="caption" id="strip-caption">today's memory ♡</div>
+                    </div>
+                </div>
+
+                <button class="btn-save-photo" onclick="savePhotoToAlbum()">SAVE PHOTO 💾</button>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let currentGridCount = 4;
+        let currentFrameClass = 'frame-sweet-diary';
+        const defaultImages = [
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90",
+            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1800&q=90",
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1800&q=90",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1800&q=90",
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1800&q=90",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90"
+        ];
+        
+        let currentImages = [...defaultImages];
+        let mediaStream = null;
+        let currentFacingMode = 'user';
+
+        // 每款框架对应的真实 CSS Filter 指令映射表（保障 Canvas 100% 重绘还原）
+        const filterMap = {
+            'frame-sweet-diary': 'brightness(1.02) contrast(0.92) sepia(0.12) hue-rotate(-10deg) saturate(1.1)',
+            'frame-seoul-night': 'brightness(1.1) contrast(1.2) hue-rotate(180deg) saturate(0.85)',
+            'frame-ice-candy': 'brightness(1.05) contrast(0.95) saturate(0.9) hue-rotate(15deg)',
+            'frame-pink-camera': 'brightness(1.12) contrast(1.05) saturate(1.15) hue-rotate(-5deg)',
+            'frame-film-club': 'brightness(0.95) contrast(1.1) sepia(0.35) saturate(1.2)',
+            'frame-milk-glass': 'brightness(1.02) contrast(0.94) sepia(0.08) saturate(0.9)',
+            'frame-cyber-angel': 'brightness(1.08) contrast(1.15) hue-rotate(210deg) saturate(0.95)',
+            'frame-school-notebook': 'brightness(1.06) contrast(1.08) hue-rotate(-15deg) saturate(1.05)',
+            'frame-cherry-pop': 'brightness(1.08) contrast(1.1) saturate(1.3) hue-rotate(-5deg)',
+            'frame-cloud-dream': 'brightness(1.05) contrast(0.9) saturate(0.95) hue-rotate(10deg)',
+            'frame-magazine-cover': 'brightness(1.0) contrast(1.08) saturate(1.02)',
+            'frame-lost-memory': 'brightness(1.04) contrast(1.15) saturate(0.85)',
+            'frame-magical-card': 'brightness(1.08) contrast(1.02) saturate(1.2) hue-rotate(-10deg)',
+            'frame-sunny-doggy': 'brightness(1.05) contrast(1.1) saturate(1.1)',
+            'frame-mint-cat': 'brightness(1.03) contrast(0.98) saturate(1.05) hue-rotate(5deg)',
+            'frame-retro-comic': 'brightness(1.1) contrast(1.25) saturate(1.2) hue-rotate(-15deg)',
+            'frame-star-spell': 'brightness(1.08) contrast(0.98) saturate(1.18) hue-rotate(-8deg)',
+            'frame-manga-rush': 'grayscale(0.15) contrast(1.28) saturate(0.9)',
+            'frame-campus-heart': 'brightness(1.08) contrast(0.94) saturate(1.08)',
+            'frame-cosmic-mecha': 'brightness(1.03) contrast(1.2) saturate(1.15) hue-rotate(8deg)'
+            ,'frame-melody-dot':'brightness(1.06) contrast(0.96) saturate(1.08)'
+            ,'frame-bakery-day':'brightness(1.08) contrast(0.94) saturate(1.04)'
+            ,'frame-mint-cookie':'brightness(1.04) contrast(1.02) saturate(1.06)'
+            ,'frame-cherry-check':'brightness(1.06) saturate(1.16)'
+            ,'frame-cream-party':'brightness(1.08) contrast(0.93) saturate(1.05)'
+            ,'frame-postcard-love':'brightness(1.04) contrast(1.04) saturate(1.1)'
+            ,'frame-pixel-soda':'contrast(1.14) saturate(1.22)'
+            ,'frame-flower-picnic':'brightness(1.08) saturate(1.08)'
+            ,'frame-comic-pop':'contrast(1.25) saturate(1.25)'
+            ,'frame-moon-letter':'brightness(1.05) contrast(1.12) saturate(0.92) hue-rotate(8deg)'
+        };
+
+        function applyFrame(className, defaultText, btnEl) {
+            document.querySelectorAll('.frame-opt-btn').forEach(b => b.classList.remove('active'));
+            if(btnEl) btnEl.classList.add('active');
+
+            currentFrameClass = className;
+            const strip = document.getElementById('main-strip');
+            strip.className = `nanalog-strip ${className}`;
+
+            document.getElementById('caption-input').value = defaultText;
+            document.getElementById('strip-caption').textContent = defaultText;
+        }
+
+        function updateCaption(text) {
+            document.getElementById('strip-caption').textContent = text;
+        }
+
+        function setGridLayout(count) {
+            currentGridCount = count;
+            document.getElementById('btn-grid-4').classList.toggle('active', count === 4);
+            document.getElementById('btn-grid-8').classList.toggle('active', count === 8);
+
+            const container = document.getElementById('slots-container');
+            container.innerHTML = '';
+            
+            if (count === 8) {
+                container.classList.add('grid-8-layout');
+            } else {
+                container.classList.remove('grid-8-layout');
+            }
+
+            for (let i = 0; i < count; i++) {
+                const slotDiv = document.createElement('div');
+                slotDiv.className = 'photo-slot';
+                slotDiv.id = `slot-${i}`;
+                
+                const img = document.createElement('img');
+                img.crossOrigin = 'anonymous';
+                img.src = currentImages[i] || defaultImages[i % defaultImages.length];
+                
+                slotDiv.appendChild(img);
+                container.appendChild(slotDiv);
+            }
+            setupPhotoEditor();
+        }
+
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            const count = Math.min(files.length, currentGridCount);
+
+            for (let i = 0; i < count; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImages[i] = e.target.result;
+                    const slotDiv = document.getElementById(`slot-${i}`);
+                    if (slotDiv) {
+                        const img = slotDiv.querySelector('img');
+                        if (img) {
+                            img.src = e.target.result;
+                            resetImageTransform(img);
+                        }
+                    }
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        function updateImageTransform(img) {
+            const zoom = Number(img.dataset.zoom || 1);
+            const x = Number(img.dataset.posX || 50);
+            const y = Number(img.dataset.posY || 50);
+            img.style.objectPosition = `${x}% ${y}%`;
+            img.style.transform = `scale(${zoom})`;
+        }
+
+        function resetImageTransform(img) {
+            img.dataset.zoom = '1';
+            img.dataset.posX = '50';
+            img.dataset.posY = '50';
+            updateImageTransform(img);
+        }
+
+        function changeImageZoom(img, amount) {
+            img.dataset.zoom = String(Math.max(1, Math.min(3, Number(img.dataset.zoom || 1) + amount)));
+            updateImageTransform(img);
+        }
+
+        function swapImages(first, second) {
+            const props = ['src', 'zoom', 'posX', 'posY'];
+            const a = { src: first.src, zoom: first.dataset.zoom || '1', posX: first.dataset.posX || '50', posY: first.dataset.posY || '50' };
+            const b = { src: second.src, zoom: second.dataset.zoom || '1', posX: second.dataset.posX || '50', posY: second.dataset.posY || '50' };
+            first.src = b.src; second.src = a.src;
+            props.slice(1).forEach(key => {
+                first.dataset[key] = b[key];
+                second.dataset[key] = a[key];
+            });
+            updateImageTransform(first);
+            updateImageTransform(second);
+            syncCurrentImages();
+        }
+
+        function syncCurrentImages() {
+            document.querySelectorAll('#slots-container .photo-slot img').forEach((img, index) => currentImages[index] = img.src);
+        }
+
+        function setupPhotoEditor() {
+            document.querySelectorAll('#slots-container .photo-slot').forEach(slot => {
+                if (slot.dataset.editorReady) return;
+                slot.dataset.editorReady = 'true';
+                const img = slot.querySelector('img');
+                if (!img) return;
+                resetImageTransform(img);
+
+                const tools = document.createElement('div');
+                tools.className = 'photo-tools';
+                tools.innerHTML = '<button type="button" class="photo-tool" title="缩小照片">−</button><button type="button" class="photo-tool" title="放大照片">+</button>';
+                const buttons = tools.querySelectorAll('button');
+                buttons[0].onclick = e => { e.stopPropagation(); changeImageZoom(img, -.15); };
+                buttons[1].onclick = e => { e.stopPropagation(); changeImageZoom(img, .15); };
+                slot.appendChild(tools);
+
+                let startX = 0, startY = 0, originX = 50, originY = 50, startDistance = 0, startZoom = 1;
+                let dragging = false, moved = false;
+                img.addEventListener('pointerdown', e => {
+                    if (e.pointerType === 'mouse' && e.button !== 0) return;
+                    dragging = true; moved = false;
+                    startX = e.clientX; startY = e.clientY;
+                    originX = Number(img.dataset.posX || 50); originY = Number(img.dataset.posY || 50);
+                    img.setPointerCapture(e.pointerId);
+                    slot.classList.add('drag-source');
+                });
+                img.addEventListener('pointermove', e => {
+                    if (!dragging) return;
+                    const dx = e.clientX - startX, dy = e.clientY - startY;
+                    if (Math.hypot(dx, dy) > 6) moved = true;
+                    img.dataset.posX = String(Math.max(0, Math.min(100, originX - dx / slot.clientWidth * 100)));
+                    img.dataset.posY = String(Math.max(0, Math.min(100, originY - dy / slot.clientHeight * 100)));
+                    updateImageTransform(img);
+                    document.querySelectorAll('.photo-slot.swap-target').forEach(el => el.classList.remove('swap-target'));
+                    const target = document.elementFromPoint(e.clientX, e.clientY)?.closest('.photo-slot');
+                    if (target && target !== slot) target.classList.add('swap-target');
+                });
+                const finishDrag = e => {
+                    if (!dragging) return;
+                    dragging = false;
+                    const target = document.elementFromPoint(e.clientX, e.clientY)?.closest('.photo-slot');
+                    slot.classList.remove('drag-source');
+                    document.querySelectorAll('.photo-slot.swap-target').forEach(el => el.classList.remove('swap-target'));
+                    if (moved && target && target !== slot) swapImages(img, target.querySelector('img'));
+                };
+                img.addEventListener('pointerup', finishDrag);
+                img.addEventListener('pointercancel', finishDrag);
+                img.addEventListener('wheel', e => { e.preventDefault(); changeImageZoom(img, e.deltaY < 0 ? .1 : -.1); }, { passive: false });
+
+                img.addEventListener('touchstart', e => {
+                    if (e.touches.length === 2) {
+                        startDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                        startZoom = Number(img.dataset.zoom || 1);
+                    }
+                }, { passive: true });
+                img.addEventListener('touchmove', e => {
+                    if (e.touches.length === 2 && startDistance) {
+                        const distance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                        img.dataset.zoom = String(Math.max(1, Math.min(3, startZoom * distance / startDistance)));
+                        updateImageTransform(img);
+                    }
+                }, { passive: true });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', setupPhotoEditor);
+
+        async function openWebcamModal() {
+            const modal = document.getElementById('camera-modal');
+            document.getElementById('cam-status-title').textContent = "📸 准备连拍";
+            document.getElementById('cam-tip').textContent = `当前布局需要连续自动拍摄 ${currentGridCount} 张照片`;
+            document.getElementById('btn-start-snap').style.display = 'inline-block';
+            modal.style.display = 'flex';
+
+            await initCameraStream();
+        }
+
+        async function initCameraStream() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+
+            const video = document.getElementById('webcam-video');
+            video.className = (currentFacingMode === 'user') ? 'front-cam' : 'back-cam';
+
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { exact: currentFacingMode } },
+                    audio: false
+                });
+            } catch (err) {
+                try {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: currentFacingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
+                        audio: false
+                    });
+                } catch (innerErr) {
+                    console.error(innerErr);
+                    alert("无法打开该摄像头，部分设备可能不支持切换。");
+                    return;
+                }
+            }
+            video.srcObject = mediaStream;
+        }
+
+        async function toggleCameraDirection() {
+            currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+            await initCameraStream();
+        }
+
+        function closeWebcamModal() {
+            const modal = document.getElementById('camera-modal');
+            modal.style.display = 'none';
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+        }
+
+        async function startContinuousCapture() {
+            const startBtn = document.getElementById('btn-start-snap');
+            startBtn.style.display = 'none';
+            const tip = document.getElementById('cam-tip');
+            const countdownEl = document.getElementById('countdown-display');
+            const video = document.getElementById('webcam-video');
+
+            for (let i = 0; i < currentGridCount; i++) {
+                tip.textContent = `正在准备第 ${i + 1} / ${currentGridCount} 张照片...`;
+                
+                countdownEl.style.display = 'block';
+                for (let c = 3; c > 0; c--) {
+                    countdownEl.textContent = c;
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+                countdownEl.style.display = 'none';
+
+                tip.textContent = `📸 正在拍摄第 ${i + 1} 张！`;
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth || 1280;
+                canvas.height = video.videoHeight || 960;
+                const ctx = canvas.getContext('2d');
+                
+                if (currentFacingMode === 'user') {
+                    ctx.translate(canvas.width, 0);
+                    ctx.scale(-1, 1);
+                }
+                
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataUrl = canvas.toDataURL('image/png');
+
+                currentImages[i] = dataUrl;
+                const slotDiv = document.getElementById(`slot-${i}`);
+                if (slotDiv) {
+                    const img = slotDiv.querySelector('img');
+                    if (img) {
+                        img.src = dataUrl;
+                        resetImageTransform(img);
+                    }
+                }
+
+                if (i < currentGridCount - 1) {
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+            }
+
+            tip.textContent = "✨ 连拍完成！已自动填入相纸。";
+            await new Promise(r => setTimeout(r, 1500));
+            closeWebcamModal();
+        }
+
+        // =========================================================
+        // 🔥 核心重构：纯原生 Canvas 离屏像素渲染导出（彻底解决无滤镜问题）
+        // =========================================================
+        async function savePhotoToAlbum() {
+            const btn = document.querySelector('.btn-save-photo');
+            btn.textContent = "⏳ 正在导出 3X 超清照片...";
+            btn.disabled = true;
+
+            try {
+                const strip = document.getElementById('main-strip');
+                // 按相纸的实际比例导出 1600px 宽 PNG，不依赖屏幕像素密度。
+                const canvasWidth = 1600;
+                const scale = canvasWidth / strip.offsetWidth;
+                const canvasHeight = Math.round(strip.offsetHeight * scale);
+
+                const canvas = document.createElement('canvas');
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                const ctx = canvas.getContext('2d', { alpha: false });
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+
+                // 1. 绘制底色背景
+                const computedBg = window.getComputedStyle(strip).backgroundColor;
+                ctx.fillStyle = computedBg || "#ffffff";
+                ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                drawFrameBackground(ctx, currentFrameClass, canvasWidth, canvasHeight, scale);
+
+                // 2. 获取滤镜指令，在 2D 上显式开启 Filter 渲染
+                const activeFilter = filterMap[currentFrameClass] || 'none';
+
+                // 3. 循环逐个重绘照片框并应用硬滤镜
+                const slots = strip.querySelectorAll('.photo-slot');
+                const imageCache = new Map();
+                for (let i = 0; i < slots.length; i++) {
+                    const slot = slots[i];
+                    const img = slot.querySelector('img');
+                    if (!img) continue;
+
+                    // 计算元素在相纸中的物理相对坐标
+                    const slotRect = slot.getBoundingClientRect();
+                    const stripRect = strip.getBoundingClientRect();
+
+                    const x = (slotRect.left - stripRect.left) * scale;
+                    const y = (slotRect.top - stripRect.top) * scale;
+                    const w = slotRect.width * scale;
+                    const h = slotRect.height * scale;
+
+                    // 加载并确保图片完全进入内存
+                    let loadedImg = imageCache.get(img.src);
+                    if (!loadedImg) {
+                        loadedImg = await loadImageAsync(img.src);
+                        imageCache.set(img.src, loadedImg);
+                    }
+
+                    ctx.save();
+                    
+                    // 【关键突破】：给离屏 Canvas 显式赋值 CSS Filter 渲染器！
+                    // 移动端部分浏览器会暴露 filter 属性但实际不渲染，因此移动端统一走像素后备。
+                    const isMobileBrowser = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+                    const canvasFilterSupported = 'filter' in ctx && !isMobileBrowser;
+                    if (canvasFilterSupported) ctx.filter = activeFilter;
+
+                    // 计算 Object-Fit: cover 逻辑，防止变形
+                    const imgRatio = loadedImg.width / loadedImg.height;
+                    const slotRatio = w / h;
+                    let sx, sy, sw, sh;
+
+                    if (imgRatio > slotRatio) {
+                        sh = loadedImg.height;
+                        sw = sh * slotRatio;
+                        sx = (loadedImg.width - sw) / 2;
+                        sy = 0;
+                    } else {
+                        sw = loadedImg.width;
+                        sh = sw / slotRatio;
+                        sx = 0;
+                        sy = (loadedImg.height - sh) / 2;
+                    }
+
+                    // 把图片裁切并施加滤镜画进 Canvas
+                    const zoom = Number(img.dataset.zoom || 1);
+                    const posX = Number(img.dataset.posX || 50) / 100;
+                    const posY = Number(img.dataset.posY || 50) / 100;
+                    sw /= zoom;
+                    sh /= zoom;
+                    sx = Math.max(0, Math.min(loadedImg.width - sw, posX * (loadedImg.width - sw)));
+                    sy = Math.max(0, Math.min(loadedImg.height - sh, posY * (loadedImg.height - sh)));
+                    ctx.beginPath();
+                    ctx.rect(x, y, w, h);
+                    ctx.clip();
+                    ctx.drawImage(loadedImg, sx, sy, sw, sh, x, y, w, h);
+                    ctx.restore(); // 还原状态，避免影响后续文字绘制
+
+                    // Safari / 部分手机浏览器不支持 Canvas filter，使用像素滤镜兜底。
+                    if (!canvasFilterSupported && activeFilter !== 'none') {
+                        applyPixelFilter(ctx, x, y, w, h, activeFilter);
+                    }
+
+                    // 如果图片有外边框，绘制边框
+                    const computedImgStyle = window.getComputedStyle(img);
+                    if (computedImgStyle.borderWidth !== '0px') {
+                        ctx.strokeStyle = computedImgStyle.borderColor || '#111';
+                        ctx.lineWidth = parseFloat(computedImgStyle.borderWidth) * scale;
+                        ctx.strokeRect(x, y, w, h);
+                    }
+                }
+                drawFrameStickers(ctx, currentFrameClass, canvasWidth, canvasHeight, scale);
+
+                // 4. 渲染文字 (Caption)
+                const captionEl = document.getElementById('strip-caption');
+                if (captionEl) {
+                    const captionStyle = window.getComputedStyle(captionEl);
+                    const captionRect = captionEl.getBoundingClientRect();
+                    const stripRect = strip.getBoundingClientRect();
+
+                    const fontPx = parseFloat(captionStyle.fontSize) * scale;
+                    const fontFamily = captionStyle.fontFamily;
+                    const fontWeight = captionStyle.fontWeight;
+                    
+                    ctx.font = `${fontWeight} ${fontPx}px ${fontFamily}`;
+                    ctx.fillStyle = captionStyle.color;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    const textX = canvasWidth / 2;
+                    const textY = (captionRect.top - stripRect.top + captionRect.height / 2) * scale;
+
+                    ctx.fillText(captionEl.textContent, textX, textY);
+                }
+
+                // 5. 导出并触发文件下载
+                // toBlob 异步编码，避免 toDataURL 生成巨大字符串导致手机卡顿。
+                const blob = await canvasToBlob(canvas, 'image/png');
+                const fileName = `NANALOG-Studio-${Date.now()}.png`;
+                const objectURL = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = objectURL;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(objectURL), 30000);
+
+            } catch (err) {
+                console.error("保存失败详情:", err);
+                alert("导出失败，请检查网络或点击页面截图保存！");
+            } finally {
+                btn.textContent = "SAVE PHOTO 💾";
+                btn.disabled = false;
+            }
+        }
+
+        function loadImageAsync(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = async () => {
+                    try { await img.decode(); } catch (_) {}
+                    resolve(img);
+                };
+                img.onerror = (e) => reject(e);
+                img.src = src;
+            });
+        }
+
+        function canvasToBlob(canvas, type) {
+            return new Promise((resolve, reject) => {
+                canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG 编码失败')), type);
+            });
+        }
+
+        function drawFrameBackground(ctx, frame, width, height, scale) {
+            const themes = {
+                'frame-melody-dot':['#fff0f6','#5b3b47','dots'], 'frame-bakery-day':['#fff9df','#bfdbfe','check'],
+                'frame-mint-cookie':['#d9fff0','#805d35','dots'], 'frame-cherry-check':['#fff4f4','#ffd2d8','check'],
+                'frame-cream-party':['#fff7ed','#f9a8d4','plain'], 'frame-postcard-love':['#fefce8','#ef4444','plain'],
+                'frame-pixel-soda':['#c4b5fd','#67e8f9','grid'], 'frame-flower-picnic':['#f0fdf4','#bbf7d0','check'],
+                'frame-comic-pop':['#fde047','#111111','dots'], 'frame-moon-letter':['#172554','#fef08a','stars']
+            };
+            const theme = themes[frame];
+            if (!theme) return;
+            ctx.save(); ctx.fillStyle=theme[0]; ctx.fillRect(0,0,width,height); ctx.fillStyle=theme[1]; ctx.strokeStyle=theme[1];
+            const step=theme[2]==='check'?70:45;
+            if(theme[2]==='dots') for(let y=15;y<height;y+=step) for(let x=15;x<width;x+=step){ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();}
+            if(theme[2]==='check') {ctx.globalAlpha=.38; for(let y=0;y<height;y+=step) for(let x=0;x<width;x+=step) if((x/step+y/step)%2===0)ctx.fillRect(x,y,step,step);}
+            if(theme[2]==='grid') {ctx.globalAlpha=.55;ctx.lineWidth=5;for(let x=0;x<width;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke();}for(let y=0;y<height;y+=70){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke();}}
+            if(theme[2]==='stars') {ctx.font=`${30*scale}px sans-serif`;ctx.fillText('✦',35*scale,45*scale);ctx.fillText('✧',260*scale,110*scale);ctx.fillText('✦',45*scale,height-55*scale);}
+            ctx.restore();
+        }
+
+        function drawFrameStickers(ctx, frame, width, height, scale) {
+            const stickerMap={
+                'frame-melody-dot':['♪','♡','☆'], 'frame-bakery-day':['BAKE','✦','♡'], 'frame-mint-cookie':['✿','☆','♡'],
+                'frame-cherry-check':['●●','♡','✿'], 'frame-cream-party':['♡','✦','YUM'], 'frame-postcard-love':['LOVE','✉','♡'],
+                'frame-pixel-soda':['★','+','PIX'], 'frame-flower-picnic':['✿','❀','♡'], 'frame-comic-pop':['WOW!','★','!'],
+                'frame-moon-letter':['☾','✦','☆']
+            };
+            const items=stickerMap[frame]; if(!items)return;
+            const dark=frame==='frame-moon-letter';
+            ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';ctx.lineWidth=5*scale;
+            const spots=[[35*scale,42*scale],[width-38*scale,height*.48],[45*scale,height-55*scale]];
+            items.forEach((item,i)=>{ctx.font=`800 ${(i===0?22:18)*scale}px sans-serif`;ctx.strokeStyle=dark?'#172554':'#fff';ctx.fillStyle=dark?'#fef08a':['#db2777','#b7791f','#2563eb'][i];ctx.strokeText(item,spots[i][0],spots[i][1]);ctx.fillText(item,spots[i][0],spots[i][1]);});
+            ctx.restore();
+        }
+
+        function applyPixelFilter(ctx, x, y, width, height, filterText) {
+            const ix = Math.max(0, Math.round(x));
+            const iy = Math.max(0, Math.round(y));
+            const iw = Math.min(ctx.canvas.width - ix, Math.round(width));
+            const ih = Math.min(ctx.canvas.height - iy, Math.round(height));
+            if (iw <= 0 || ih <= 0) return;
+
+            const values = {};
+            filterText.replace(/([a-z-]+)\(([-\d.]+)(deg)?\)/g, (_, name, value) => {
+                values[name] = Number(value);
+            });
+            const brightness = values.brightness ?? 1;
+            const contrast = values.contrast ?? 1;
+            const saturation = values.saturate ?? 1;
+            const grayscale = values.grayscale ?? 0;
+            const sepia = values.sepia ?? 0;
+            const hue = (values['hue-rotate'] ?? 0) * Math.PI / 180;
+            const cosH = Math.cos(hue);
+            const sinH = Math.sin(hue);
+            const imageData = ctx.getImageData(ix, iy, iw, ih);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i] * brightness;
+                let g = data[i + 1] * brightness;
+                let b = data[i + 2] * brightness;
+
+                r = (r - 128) * contrast + 128;
+                g = (g - 128) * contrast + 128;
+                b = (b - 128) * contrast + 128;
+
+                const gray = 0.213 * r + 0.715 * g + 0.072 * b;
+                r = gray + saturation * (r - gray);
+                g = gray + saturation * (g - gray);
+                b = gray + saturation * (b - gray);
+                if (grayscale) {
+                    r += (gray - r) * grayscale;
+                    g += (gray - g) * grayscale;
+                    b += (gray - b) * grayscale;
+                }
+
+                if (sepia) {
+                    const sr = r * 0.393 + g * 0.769 + b * 0.189;
+                    const sg = r * 0.349 + g * 0.686 + b * 0.168;
+                    const sb = r * 0.272 + g * 0.534 + b * 0.131;
+                    r += (sr - r) * sepia;
+                    g += (sg - g) * sepia;
+                    b += (sb - b) * sepia;
+                }
+
+                if (hue) {
+                    const hr = r * (0.213 + cosH * 0.787 - sinH * 0.213) + g * (0.715 - cosH * 0.715 - sinH * 0.715) + b * (0.072 - cosH * 0.072 + sinH * 0.928);
+                    const hg = r * (0.213 - cosH * 0.213 + sinH * 0.143) + g * (0.715 + cosH * 0.285 + sinH * 0.140) + b * (0.072 - cosH * 0.072 - sinH * 0.283);
+                    const hb = r * (0.213 - cosH * 0.213 - sinH * 0.787) + g * (0.715 - cosH * 0.715 + sinH * 0.715) + b * (0.072 + cosH * 0.928 + sinH * 0.072);
+                    r = hr; g = hg; b = hb;
+                }
+
+                data[i] = Math.max(0, Math.min(255, r));
+                data[i + 1] = Math.max(0, Math.min(255, g));
+                data[i + 2] = Math.max(0, Math.min(255, b));
+            }
+            ctx.putImageData(imageData, ix, iy);
+        }
+    </script>
+</body>
+</html>
