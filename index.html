@@ -1002,8 +1002,9 @@
                 ctx.imageSmoothingQuality = 'high';
 
                 // 1. 绘制底色背景
-                const computedBg = window.getComputedStyle(strip).backgroundColor;
-                ctx.fillStyle = computedBg || "#ffffff";
+                const stripStyle = window.getComputedStyle(strip);
+                const computedBg = stripStyle.backgroundColor;
+                ctx.fillStyle = isTransparentColor(computedBg) ? getFrameBaseColor(currentFrameClass) : computedBg;
                 ctx.fillRect(0, 0, canvasWidth, canvasHeight);
                 drawFrameBackground(ctx, currentFrameClass, canvasWidth, canvasHeight, scale);
 
@@ -1018,14 +1019,11 @@
                     const img = slot.querySelector('img');
                     if (!img) continue;
 
-                    // 计算元素在相纸中的物理相对坐标
-                    const slotRect = slot.getBoundingClientRect();
-                    const stripRect = strip.getBoundingClientRect();
-
-                    const x = (slotRect.left - stripRect.left) * scale;
-                    const y = (slotRect.top - stripRect.top) * scale;
-                    const w = slotRect.width * scale;
-                    const h = slotRect.height * scale;
+                    // 使用相纸内部布局坐标，避免手机页面缩放和小数像素导致首格横向偏移。
+                    const x = Math.round(slot.offsetLeft * scale);
+                    const y = Math.round(slot.offsetTop * scale);
+                    const w = Math.round(slot.offsetWidth * scale);
+                    const h = Math.round(slot.offsetHeight * scale);
 
                     // 加载并确保图片完全进入内存
                     let loadedImg = imageCache.get(img.src);
@@ -1092,9 +1090,6 @@
                 const captionEl = document.getElementById('strip-caption');
                 if (captionEl) {
                     const captionStyle = window.getComputedStyle(captionEl);
-                    const captionRect = captionEl.getBoundingClientRect();
-                    const stripRect = strip.getBoundingClientRect();
-
                     const fontPx = parseFloat(captionStyle.fontSize) * scale;
                     const fontFamily = captionStyle.fontFamily;
                     const fontWeight = captionStyle.fontWeight;
@@ -1105,10 +1100,13 @@
                     ctx.textBaseline = 'middle';
 
                     const textX = canvasWidth / 2;
-                    const textY = (captionRect.top - stripRect.top + captionRect.height / 2) * scale;
+                    const textY = (captionEl.offsetTop + captionEl.offsetHeight / 2) * scale;
 
                     ctx.fillText(captionEl.textContent, textX, textY);
                 }
+
+                // 最后绘制相纸本身的四边框，原实现只绘制了照片边线。
+                drawStripBorder(ctx, stripStyle, canvasWidth, canvasHeight, scale);
 
                 // 5. 导出并触发文件下载
                 // toBlob 异步编码，避免 toDataURL 生成巨大字符串导致手机卡顿。
@@ -1149,6 +1147,45 @@
             return new Promise((resolve, reject) => {
                 canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG 编码失败')), type);
             });
+        }
+
+        function isTransparentColor(color) {
+            return !color || color === 'transparent' || /rgba\([^)]*,\s*0(?:\.0+)?\s*\)/.test(color);
+        }
+
+        function getFrameBaseColor(frame) {
+            const colors = {
+                'frame-sweet-diary':'#fcf8f2','frame-seoul-night':'#0a0a0c','frame-ice-candy':'#e0f2fe',
+                'frame-pink-camera':'#ffd1dc','frame-film-club':'#1a1816','frame-milk-glass':'#fcfcfc',
+                'frame-cyber-angel':'#e2e8f0','frame-school-notebook':'#ffffff','frame-cherry-pop':'#fff0f2',
+                'frame-cloud-dream':'#e0f2fe','frame-magazine-cover':'#ffffff','frame-lost-memory':'#c0c0c0',
+                'frame-magical-card':'#fff0f6','frame-sunny-doggy':'#2c7a7b','frame-mint-cat':'#e6fffa',
+                'frame-retro-comic':'#fff5f5','frame-star-spell':'#fff1fa','frame-manga-rush':'#ffffff',
+                'frame-campus-heart':'#e8f7ff','frame-cosmic-mecha':'#111827','frame-melody-dot':'#fff0f6',
+                'frame-bakery-day':'#fff9df','frame-mint-cookie':'#d9fff0','frame-cherry-check':'#fff4f4',
+                'frame-cream-party':'#fff7ed','frame-postcard-love':'#fefce8','frame-pixel-soda':'#c4b5fd',
+                'frame-flower-picnic':'#f0fdf4','frame-comic-pop':'#fde047','frame-moon-letter':'#172554'
+            };
+            return colors[frame] || '#ffffff';
+        }
+
+        function drawStripBorder(ctx, style, width, height, scale) {
+            const sides = [
+                ['Top', 0, 0, width, 0], ['Right', width, 0, width, height],
+                ['Bottom', width, height, 0, height], ['Left', 0, height, 0, 0]
+            ];
+            ctx.save();
+            sides.forEach(([side, x1, y1, x2, y2]) => {
+                const lineWidth = parseFloat(style[`border${side}Width`]) * scale;
+                if (!lineWidth) return;
+                ctx.strokeStyle = style[`border${side}Color`] || '#111';
+                ctx.lineWidth = lineWidth;
+                ctx.beginPath();
+                ctx.moveTo(x1 === 0 ? lineWidth / 2 : x1 - lineWidth / 2, y1 === 0 ? lineWidth / 2 : y1 - lineWidth / 2);
+                ctx.lineTo(x2 === 0 ? lineWidth / 2 : x2 - lineWidth / 2, y2 === 0 ? lineWidth / 2 : y2 - lineWidth / 2);
+                ctx.stroke();
+            });
+            ctx.restore();
         }
 
         function drawFrameBackground(ctx, frame, width, height, scale) {
