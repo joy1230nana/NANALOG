@@ -776,14 +776,27 @@
             const zoom = Number(img.dataset.zoom || 1);
             const x = Number(img.dataset.posX || 50);
             const y = Number(img.dataset.posY || 50);
+            const rotation = Number(img.dataset.rotation || 0);
+            const slot = img.closest('.photo-slot');
             img.style.objectPosition = `${x}% ${y}%`;
-            img.style.transform = `scale(${zoom})`;
+            img.style.position = 'absolute';
+            img.style.left = '50%';
+            img.style.top = '50%';
+            if (rotation % 180 !== 0 && slot) {
+                img.style.width = `${slot.clientHeight}px`;
+                img.style.height = `${slot.clientWidth}px`;
+            } else {
+                img.style.width = '100%';
+                img.style.height = '100%';
+            }
+            img.style.transform = `translate(-50%, -50%) scale(${zoom}) rotate(${rotation}deg)`;
         }
 
         function resetImageTransform(img) {
             img.dataset.zoom = '1';
             img.dataset.posX = '50';
             img.dataset.posY = '50';
+            img.dataset.rotation = '0';
             updateImageTransform(img);
         }
 
@@ -792,10 +805,15 @@
             updateImageTransform(img);
         }
 
+        function rotateImage(img) {
+            img.dataset.rotation = String((Number(img.dataset.rotation || 0) + 90) % 360);
+            updateImageTransform(img);
+        }
+
         function swapImages(first, second) {
-            const props = ['src', 'zoom', 'posX', 'posY'];
-            const a = { src: first.src, zoom: first.dataset.zoom || '1', posX: first.dataset.posX || '50', posY: first.dataset.posY || '50' };
-            const b = { src: second.src, zoom: second.dataset.zoom || '1', posX: second.dataset.posX || '50', posY: second.dataset.posY || '50' };
+            const props = ['src', 'zoom', 'posX', 'posY', 'rotation'];
+            const a = { src: first.src, zoom: first.dataset.zoom || '1', posX: first.dataset.posX || '50', posY: first.dataset.posY || '50', rotation: first.dataset.rotation || '0' };
+            const b = { src: second.src, zoom: second.dataset.zoom || '1', posX: second.dataset.posX || '50', posY: second.dataset.posY || '50', rotation: second.dataset.rotation || '0' };
             first.src = b.src; second.src = a.src;
             props.slice(1).forEach(key => {
                 first.dataset[key] = b[key];
@@ -820,10 +838,11 @@
 
                 const tools = document.createElement('div');
                 tools.className = 'photo-tools';
-                tools.innerHTML = '<button type="button" class="photo-tool" title="缩小照片">−</button><button type="button" class="photo-tool" title="放大照片">+</button>';
+                tools.innerHTML = '<button type="button" class="photo-tool" title="缩小照片">−</button><button type="button" class="photo-tool" title="放大照片">+</button><button type="button" class="photo-tool" title="旋转照片 90 度">↻</button>';
                 const buttons = tools.querySelectorAll('button');
                 buttons[0].onclick = e => { e.stopPropagation(); changeImageZoom(img, -.15); };
                 buttons[1].onclick = e => { e.stopPropagation(); changeImageZoom(img, .15); };
+                buttons[2].onclick = e => { e.stopPropagation(); rotateImage(img); };
                 slot.appendChild(tools);
 
                 let startX = 0, startY = 0, originX = 50, originY = 50, startDistance = 0, startZoom = 1;
@@ -876,6 +895,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', setupPhotoEditor);
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('#slots-container .photo-slot img').forEach(updateImageTransform);
+        });
 
         async function openWebcamModal() {
             const modal = document.getElementById('camera-modal');
@@ -1051,8 +1073,12 @@
                     if (canvasFilterSupported) ctx.filter = activeFilter;
 
                     // 计算 Object-Fit: cover 逻辑，防止变形
+                    const rotation = Number(img.dataset.rotation || 0) % 360;
+                    const rotatedQuarterTurn = rotation % 180 !== 0;
+                    const drawW = rotatedQuarterTurn ? h : w;
+                    const drawH = rotatedQuarterTurn ? w : h;
                     const imgRatio = loadedImg.width / loadedImg.height;
-                    const slotRatio = w / h;
+                    const slotRatio = drawW / drawH;
                     let sx, sy, sw, sh;
 
                     if (imgRatio > slotRatio) {
@@ -1082,7 +1108,9 @@
                     ctx.beginPath();
                     ctx.rect(x, y, w, h);
                     ctx.clip();
-                    ctx.drawImage(loadedImg, sx, sy, sw, sh, x, y, w, h);
+                    ctx.translate(x + w / 2, y + h / 2);
+                    ctx.rotate(rotation * Math.PI / 180);
+                    ctx.drawImage(loadedImg, sx, sy, sw, sh, -drawW / 2, -drawH / 2, drawW, drawH);
                     ctx.restore(); // 还原状态，避免影响后续文字绘制
 
                     // Safari / 部分手机浏览器不支持 Canvas filter，使用像素滤镜兜底。
