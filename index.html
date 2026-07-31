@@ -425,7 +425,7 @@
             box-shadow: 1px 1px 0px #111;
         }
 
-        /* 30 款独家边框样式与滤镜定义 (CSS 滤镜匹配系统) */
+        /* 40 款独家边框样式与滤镜定义 (CSS 滤镜匹配系统) */
         .frame-sweet-diary { background: #fcf8f2; border: 1px solid #ebd8c3; }
         .frame-sweet-diary img { border: 1.5px solid #f4a8b8; filter: brightness(1.02) contrast(0.92) sepia(0.12) hue-rotate(-10deg) saturate(1.1); }
         .frame-sweet-diary .caption { font-family: 'Caveat', cursive; font-size: 1.3rem; color: #d86b81; }
@@ -536,6 +536,24 @@
         .frame-moon-letter { background:#172554; border:4px double #fef08a; }
         .frame-moon-letter img { border:3px solid #fef08a; border-radius:8px; filter:brightness(1.05) contrast(1.12) saturate(.92) hue-rotate(8deg); }
         .frame-moon-letter .caption { font-family:'Caveat',cursive; font-size:1.3rem; color:#fef08a; }
+        .frame-bow-kitty { background:#fff5e8; border:5px solid #ef4444; background-image:linear-gradient(135deg,rgba(59,130,246,.13) 25%,transparent 25%,transparent 50%,rgba(59,130,246,.13) 50%,rgba(59,130,246,.13) 75%,transparent 75%); background-size:28px 28px; }
+        .frame-bow-kitty img { border:4px solid #fff; filter:brightness(1.07) saturate(1.12); } .frame-bow-kitty .caption{font-family:'Caveat';font-size:1.3rem;color:#dc2626}
+        .frame-pudding-pup { background:#fff7bf; border:5px solid #9a6b3f; background-image:radial-gradient(#f59e0b 2px,transparent 2px);background-size:18px 18px; }
+        .frame-pudding-pup img{border:4px solid #fff8dc;border-radius:9px;filter:brightness(1.08) saturate(1.08)} .frame-pudding-pup .caption{font-family:'Caveat';font-size:1.3rem;color:#92400e}
+        .frame-pink-bunny { background:#ffd9e8; border:5px dashed #f472b6; } .frame-pink-bunny img{border:4px solid #fff;border-radius:12px;filter:brightness(1.08) contrast(.95) saturate(1.08)} .frame-pink-bunny .caption{font-family:'Caveat';font-size:1.3rem;color:#be185d}
+        .frame-black-ear-pup { background:#bde7ff; border:5px solid #1f2937; background-image:linear-gradient(45deg,rgba(255,255,255,.5) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.5) 75%);background-size:24px 24px; }
+        .frame-black-ear-pup img{border:4px solid #fff;filter:brightness(1.05) contrast(1.04) saturate(1.08)} .frame-black-ear-pup .caption{font-family:'VT323';font-size:1.1rem;color:#1f2937}
+        .frame-cozy-bear { background:#e9f5b8; border:5px solid #9a6b3f; background-image:linear-gradient(90deg,rgba(255,255,255,.45) 50%,transparent 50%),linear-gradient(rgba(255,255,255,.45) 50%,transparent 50%);background-size:30px 30px; }
+        .frame-cozy-bear img{border:4px solid #fff8dc;filter:brightness(1.05) saturate(1.02)} .frame-cozy-bear .caption{font-family:'Caveat';font-size:1.3rem;color:#6b4423}
+        .frame-blue-penguin { background:#dff6ff; border:5px double #0284c7; background-image:radial-gradient(#7dd3fc 2px,transparent 2px);background-size:20px 20px; }
+        .frame-blue-penguin img{border:4px solid #fff;border-radius:8px;filter:brightness(1.06) contrast(1.02) saturate(1.06)} .frame-blue-penguin .caption{font-family:'VT323';font-size:1.1rem;color:#0369a1}
+        .frame-strawberry-milk { background:#fff1f2; border:5px solid #fb7185; background-image:radial-gradient(#fda4af 3px,transparent 3px);background-size:24px 24px; }
+        .frame-strawberry-milk img{border:4px solid #fff;filter:brightness(1.08) saturate(1.13)} .frame-strawberry-milk .caption{font-family:'Caveat';font-size:1.3rem;color:#e11d48}
+        .frame-cloud-pals { background:#e0f2fe; border:5px dotted #60a5fa; } .frame-cloud-pals img{border:4px solid #fff;border-radius:14px;filter:brightness(1.09) contrast(.94)} .frame-cloud-pals .caption{font-family:'Caveat';font-size:1.3rem;color:#2563eb}
+        .frame-candy-friends { background:#f5d0fe; border:5px solid #a855f7; background-image:linear-gradient(45deg,rgba(255,255,255,.45) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.45) 75%);background-size:20px 20px; }
+        .frame-candy-friends img{border:4px solid #fff;filter:brightness(1.07) saturate(1.15)} .frame-candy-friends .caption{font-family:'Caveat';font-size:1.3rem;color:#9333ea}
+        .frame-happy-circus { background:#fff7d6; border:6px double #ef4444; background-image:radial-gradient(#3b82f6 3px,transparent 3px);background-size:28px 28px; }
+        .frame-happy-circus img{border:4px solid #fff;filter:brightness(1.06) contrast(1.02) saturate(1.12)} .frame-happy-circus .caption{font-family:'Syne';font-size:.85rem;color:#dc2626}
     </style>
 </head>
 <body>
@@ -569,7 +587,7 @@
     <section class="hero-section">
         <div class="hero-badge">✦ VINTAGE Y2K STUDIO ✦</div>
         <h1 class="hero-title">CAPTURE YOUR<br><span>RETRO MEMORIES</span></h1>
-        <p class="hero-subtitle">30 款复古滤镜、4-Cut / 8-Cut 自由切换、相册上传与网页全自动连拍相机。</p>
+        <p class="hero-subtitle">40 款复古滤镜、4-Cut / 8-Cut 自由切换、相册上传与网页全自动连拍相机。</p>
     </section>
 
     <main id="app-booth">
@@ -577,7 +595,7 @@
             
             <!-- 左侧控制面板 -->
             <div class="controls-card">
-                <div class="section-label">[1] SELECT 1/30 FRAME</div>
+                <div class="section-label">[1] SELECT 1/40 FRAME</div>
                 <div class="frame-selector-grid">
                     <button class="frame-opt-btn active" onclick="applyFrame('frame-sweet-diary', 'today\'s memory ♡', this)">01. Sweet Diary</button>
                     <button class="frame-opt-btn" onclick="applyFrame('frame-seoul-night', 'SEOUL / 02:26 AM', this)">02. Seoul Night</button>
@@ -609,6 +627,16 @@
                     <button class="frame-opt-btn" onclick="applyFrame('frame-flower-picnic', 'flower picnic day', this)">28. Flower Picnic</button>
                     <button class="frame-opt-btn" onclick="applyFrame('frame-comic-pop', 'WOW! SNAP!', this)">29. Comic Pop</button>
                     <button class="frame-opt-btn" onclick="applyFrame('frame-moon-letter', 'a letter to the moon', this)">30. Moon Letter</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-bow-kitty', 'BOW KITTY CLUB', this)">31. Bow Kitty</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-pudding-pup', 'PUDDING PUP DAY', this)">32. Pudding Pup</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-pink-bunny', 'pink bunny wishes', this)">33. Pink Bunny</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-black-ear-pup', 'HAPPY PUPPY!', this)">34. Black Ear Pup</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cozy-bear', 'cozy bear picnic', this)">35. Cozy Bear</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-blue-penguin', 'BLUE PENGUIN CLUB', this)">36. Blue Penguin</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-strawberry-milk', 'strawberry milk ♡', this)">37. Strawberry Milk</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-cloud-pals', 'cloud pals forever', this)">38. Cloud Pals</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-candy-friends', 'CANDY FRIENDS', this)">39. Candy Friends</button>
+                    <button class="frame-opt-btn" onclick="applyFrame('frame-happy-circus', 'HAPPY CIRCUS!', this)">40. Happy Circus</button>
                 </div>
 
                 <div class="section-label">[2] GRID LAYOUT</div>
@@ -636,10 +664,10 @@
             <div class="live-photostrip-wrapper">
                 <div id="main-strip" class="nanalog-strip frame-sweet-diary">
                     <div id="slots-container" class="slots-container">
-                        <div class="photo-slot" id="slot-0"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90" crossorigin="anonymous"></div>
-                        <div class="photo-slot" id="slot-1"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90" crossorigin="anonymous"></div>
-                        <div class="photo-slot" id="slot-2"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1800&q=90" crossorigin="anonymous"></div>
-                        <div class="photo-slot" id="slot-3"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1800&q=90" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-0"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=2400&q=92" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-1"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2400&q=92" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-2"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=2400&q=92" crossorigin="anonymous"></div>
+                        <div class="photo-slot" id="slot-3"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=2400&q=92" crossorigin="anonymous"></div>
                     </div>
                     <div class="strip-footer">
                         <div class="caption" id="strip-caption">today's memory ♡</div>
@@ -656,14 +684,14 @@
         let currentGridCount = 4;
         let currentFrameClass = 'frame-sweet-diary';
         const defaultImages = [
-            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90",
-            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90",
-            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1800&q=90",
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1800&q=90",
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1800&q=90",
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1800&q=90",
-            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1800&q=90",
-            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1800&q=90"
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=2400&q=92",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2400&q=92",
+            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=2400&q=92",
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=2400&q=92",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=2400&q=92",
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=2400&q=92",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2400&q=92",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=2400&q=92"
         ];
         
         let currentImages = [...defaultImages];
@@ -702,6 +730,11 @@
             ,'frame-flower-picnic':'brightness(1.08) saturate(1.08)'
             ,'frame-comic-pop':'contrast(1.25) saturate(1.25)'
             ,'frame-moon-letter':'brightness(1.05) contrast(1.12) saturate(0.92) hue-rotate(8deg)'
+            ,'frame-bow-kitty':'brightness(1.07) saturate(1.12)','frame-pudding-pup':'brightness(1.08) saturate(1.08)'
+            ,'frame-pink-bunny':'brightness(1.08) contrast(0.95) saturate(1.08)','frame-black-ear-pup':'brightness(1.05) contrast(1.04) saturate(1.08)'
+            ,'frame-cozy-bear':'brightness(1.05) saturate(1.02)','frame-blue-penguin':'brightness(1.06) contrast(1.02) saturate(1.06)'
+            ,'frame-strawberry-milk':'brightness(1.08) saturate(1.13)','frame-cloud-pals':'brightness(1.09) contrast(0.94)'
+            ,'frame-candy-friends':'brightness(1.07) saturate(1.15)','frame-happy-circus':'brightness(1.06) contrast(1.02) saturate(1.12)'
         };
 
         function applyFrame(className, defaultText, btnEl) {
@@ -780,8 +813,11 @@
             const slot = img.closest('.photo-slot');
             img.style.objectPosition = `${x}% ${y}%`;
             img.style.position = 'absolute';
-            img.style.left = '50%';
-            img.style.top = '50%';
+            // 缩放后产生的余量用于真实的左右/上下平移，0-100 对应两端。
+            const shiftX = (50 - x) * (zoom - 1);
+            const shiftY = (50 - y) * (zoom - 1);
+            img.style.left = `${50 + shiftX}%`;
+            img.style.top = `${50 + shiftY}%`;
             if (rotation % 180 !== 0 && slot) {
                 img.style.width = `${slot.clientHeight}px`;
                 img.style.height = `${slot.clientWidth}px`;
@@ -858,7 +894,10 @@
                 img.addEventListener('pointermove', e => {
                     if (!dragging) return;
                     const dx = e.clientX - startX, dy = e.clientY - startY;
-                    if (Math.hypot(dx, dy) > 6) moved = true;
+                    if (Math.hypot(dx, dy) > 6) {
+                        moved = true;
+                        if (Number(img.dataset.zoom || 1) < 1.1) img.dataset.zoom = '1.1';
+                    }
                     img.dataset.posX = String(Math.max(0, Math.min(100, originX - dx / slot.clientWidth * 100)));
                     img.dataset.posY = String(Math.max(0, Math.min(100, originY - dy / slot.clientHeight * 100)));
                     updateImageTransform(img);
@@ -1014,7 +1053,7 @@
             try {
                 const strip = document.getElementById('main-strip');
                 // 按相纸的实际比例导出 1600px 宽 PNG，不依赖屏幕像素密度。
-                const canvasWidth = 1600;
+                const canvasWidth = 2000;
                 const scale = canvasWidth / strip.offsetWidth;
                 const canvasHeight = Math.round(strip.offsetHeight * scale);
 
@@ -1097,14 +1136,11 @@
                     const zoom = Number(img.dataset.zoom || 1);
                     const posX = Number(img.dataset.posX || 50) / 100;
                     const posY = Number(img.dataset.posY || 50) / 100;
-                    const baseSw = sw;
-                    const baseSh = sh;
-                    const baseSx = posX * (loadedImg.width - baseSw);
-                    const baseSy = posY * (loadedImg.height - baseSh);
-                    sw = baseSw / zoom;
-                    sh = baseSh / zoom;
-                    sx = Math.max(0, Math.min(loadedImg.width - sw, baseSx + (baseSw - sw) / 2));
-                    sy = Math.max(0, Math.min(loadedImg.height - sh, baseSy + (baseSh - sh) / 2));
+                    sw /= zoom;
+                    sh /= zoom;
+                    // 与预览的 object-position + 缩放平移保持同一套 0-100 取景坐标。
+                    sx = Math.max(0, Math.min(loadedImg.width - sw, posX * (loadedImg.width - sw)));
+                    sy = Math.max(0, Math.min(loadedImg.height - sh, posY * (loadedImg.height - sh)));
                     ctx.beginPath();
                     ctx.rect(x, y, w, h);
                     ctx.clip();
@@ -1206,7 +1242,10 @@
                 'frame-campus-heart':'#e8f7ff','frame-cosmic-mecha':'#111827','frame-melody-dot':'#fff0f6',
                 'frame-bakery-day':'#fff9df','frame-mint-cookie':'#d9fff0','frame-cherry-check':'#fff4f4',
                 'frame-cream-party':'#fff7ed','frame-postcard-love':'#fefce8','frame-pixel-soda':'#c4b5fd',
-                'frame-flower-picnic':'#f0fdf4','frame-comic-pop':'#fde047','frame-moon-letter':'#172554'
+                'frame-flower-picnic':'#f0fdf4','frame-comic-pop':'#fde047','frame-moon-letter':'#172554',
+                'frame-bow-kitty':'#fff5e8','frame-pudding-pup':'#fff7bf','frame-pink-bunny':'#ffd9e8',
+                'frame-black-ear-pup':'#bde7ff','frame-cozy-bear':'#e9f5b8','frame-blue-penguin':'#dff6ff',
+                'frame-strawberry-milk':'#fff1f2','frame-cloud-pals':'#e0f2fe','frame-candy-friends':'#f5d0fe','frame-happy-circus':'#fff7d6'
             };
             return colors[frame] || '#ffffff';
         }
@@ -1236,7 +1275,12 @@
                 'frame-mint-cookie':['#d9fff0','#805d35','dots'], 'frame-cherry-check':['#fff4f4','#ffd2d8','check'],
                 'frame-cream-party':['#fff7ed','#f9a8d4','plain'], 'frame-postcard-love':['#fefce8','#ef4444','plain'],
                 'frame-pixel-soda':['#c4b5fd','#67e8f9','grid'], 'frame-flower-picnic':['#f0fdf4','#bbf7d0','check'],
-                'frame-comic-pop':['#fde047','#111111','dots'], 'frame-moon-letter':['#172554','#fef08a','stars']
+                'frame-comic-pop':['#fde047','#111111','dots'], 'frame-moon-letter':['#172554','#fef08a','stars'],
+                'frame-bow-kitty':['#fff5e8','#93c5fd','check'],'frame-pudding-pup':['#fff7bf','#f59e0b','dots'],
+                'frame-pink-bunny':['#ffd9e8','#f472b6','plain'],'frame-black-ear-pup':['#bde7ff','#ffffff','check'],
+                'frame-cozy-bear':['#e9f5b8','#ffffff','check'],'frame-blue-penguin':['#dff6ff','#7dd3fc','dots'],
+                'frame-strawberry-milk':['#fff1f2','#fda4af','dots'],'frame-cloud-pals':['#e0f2fe','#ffffff','plain'],
+                'frame-candy-friends':['#f5d0fe','#ffffff','check'],'frame-happy-circus':['#fff7d6','#3b82f6','dots']
             };
             const theme = themes[frame];
             if (!theme) return;
@@ -1254,7 +1298,11 @@
                 'frame-melody-dot':['♪','♡','☆'], 'frame-bakery-day':['BAKE','✦','♡'], 'frame-mint-cookie':['✿','☆','♡'],
                 'frame-cherry-check':['●●','♡','✿'], 'frame-cream-party':['♡','✦','YUM'], 'frame-postcard-love':['LOVE','✉','♡'],
                 'frame-pixel-soda':['★','+','PIX'], 'frame-flower-picnic':['✿','❀','♡'], 'frame-comic-pop':['WOW!','★','!'],
-                'frame-moon-letter':['☾','✦','☆']
+                'frame-moon-letter':['☾','✦','☆'], 'frame-bow-kitty':['🎀','♡','CAT'],
+                'frame-pudding-pup':['★','PUP','♡'],'frame-pink-bunny':['♡','BUN','✿'],
+                'frame-black-ear-pup':['●','PUP','★'],'frame-cozy-bear':['BEAR','✿','♡'],
+                'frame-blue-penguin':['★','ICE','♡'],'frame-strawberry-milk':['●●','MILK','♡'],
+                'frame-cloud-pals':['☁','♡','☁'],'frame-candy-friends':['CANDY','★','♡'],'frame-happy-circus':['FUN','★','!']
             };
             const items=stickerMap[frame]; if(!items)return;
             const dark=frame==='frame-moon-letter';
