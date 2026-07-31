@@ -270,10 +270,12 @@
             padding: 24px 16px;
             border-radius: 16px;
             gap: 16px;
+            min-width: 0;
         }
 
         .nanalog-strip {
-            width: 320px; 
+            width: min(320px, 100%);
+            min-width: 0;
             padding: 14px 12px 18px 12px;
             display: flex;
             flex-direction: column;
@@ -1010,6 +1012,13 @@
 
                 // 2. 获取滤镜指令，在 2D 上显式开启 Filter 渲染
                 const activeFilter = filterMap[currentFrameClass] || 'none';
+                const paddingLeft = parseFloat(stripStyle.paddingLeft) || 0;
+                const paddingRight = parseFloat(stripStyle.paddingRight) || 0;
+                const borderLeft = parseFloat(stripStyle.borderLeftWidth) || 0;
+                const contentWidth = strip.clientWidth - paddingLeft - paddingRight;
+                const gridGap = parseFloat(window.getComputedStyle(document.getElementById('slots-container')).columnGap) || 0;
+                const isEightGrid = currentGridCount === 8;
+                const slotCssWidth = isEightGrid ? (contentWidth - gridGap) / 2 : contentWidth;
 
                 // 3. 循环逐个重绘照片框并应用硬滤镜
                 const slots = strip.querySelectorAll('.photo-slot');
@@ -1020,9 +1029,10 @@
                     if (!img) continue;
 
                     // 使用相纸内部布局坐标，避免手机页面缩放和小数像素导致首格横向偏移。
-                    const x = Math.round(slot.offsetLeft * scale);
+                    const column = isEightGrid ? i % 2 : 0;
+                    const x = Math.round((borderLeft + paddingLeft + column * (slotCssWidth + gridGap)) * scale);
                     const y = Math.round(slot.offsetTop * scale);
-                    const w = Math.round(slot.offsetWidth * scale);
+                    const w = Math.round(slotCssWidth * scale);
                     const h = Math.round(slot.offsetHeight * scale);
 
                     // 加载并确保图片完全进入内存
@@ -1061,10 +1071,14 @@
                     const zoom = Number(img.dataset.zoom || 1);
                     const posX = Number(img.dataset.posX || 50) / 100;
                     const posY = Number(img.dataset.posY || 50) / 100;
-                    sw /= zoom;
-                    sh /= zoom;
-                    sx = Math.max(0, Math.min(loadedImg.width - sw, posX * (loadedImg.width - sw)));
-                    sy = Math.max(0, Math.min(loadedImg.height - sh, posY * (loadedImg.height - sh)));
+                    const baseSw = sw;
+                    const baseSh = sh;
+                    const baseSx = posX * (loadedImg.width - baseSw);
+                    const baseSy = posY * (loadedImg.height - baseSh);
+                    sw = baseSw / zoom;
+                    sh = baseSh / zoom;
+                    sx = Math.max(0, Math.min(loadedImg.width - sw, baseSx + (baseSw - sw) / 2));
+                    sy = Math.max(0, Math.min(loadedImg.height - sh, baseSy + (baseSh - sh) / 2));
                     ctx.beginPath();
                     ctx.rect(x, y, w, h);
                     ctx.clip();
